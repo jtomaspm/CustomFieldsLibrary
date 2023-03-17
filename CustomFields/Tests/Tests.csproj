@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Fixtures\" />
-    <Folder Include="Systems\" />
     <Folder Include="Static\" />
   </ItemGroup>
 

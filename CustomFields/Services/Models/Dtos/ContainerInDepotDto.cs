@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using DAL;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,18 +26,22 @@ namespace Services.Models.Dtos
     internal static class ContainerInDepotBuilder{
         internal static ContainerInDepotDto? build(Container container)
         {
-            var lastOperation = container.Operations.MaxBy(x=>x.Date);
-            if (lastOperation == null) return null;
-            if (lastOperation.OperationType == "Out") return null;
-            return new ContainerInDepotDto()
+            Operation? lastOperation;
+            using (var ctx = new DatabaseContext())
             {
-                Id = container.Id,
-                Code = container.Code,
-                ContainerType = container.ContainerType.Name,
-                Depot = lastOperation.Depot.Name,
-                InDate = container.Operations.Where(x => x.OperationType == "In").Max(x => x.Date),
-                Owener = container.Owener.Name,
-            };
+                lastOperation = ctx.Operations.Where(x => x.ContainerId == container.Id).ToList().MaxBy(x => x.Date);
+                if (lastOperation == null) return null;
+                if (lastOperation.OperationType == "Out") return null;
+                return new ContainerInDepotDto()
+                {
+                    Id = container.Id,
+                    Code = container.Code,
+                    ContainerType = ctx.ContainerTypes.First(x=>x.Id == container.ContainerTypeId).Name,
+                    Depot = ctx.Depots.First(x=>x.Id == lastOperation.DepotId).Name,
+                    InDate = ctx.Operations.Where(x => x.ContainerId == container.Id && x.OperationType == "In").Max(x => x.Date),
+                    Owener = ctx.Entities.First(x=>x.Id == container.OwenerId).Name,
+                };
+            }
         }
     }
 }

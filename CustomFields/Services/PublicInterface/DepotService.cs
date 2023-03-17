@@ -39,7 +39,7 @@ namespace Services.PublicInterface
                     Id = x.Id,
                     Location = x.Location,
                     Name = x.Name,
-                    Owener = x.Owener.Name
+                    Owener = ctx.Entities.First(y=>y.Id==x.OwenerId).Name
                 });
             }
         }
@@ -67,8 +67,8 @@ namespace Services.PublicInterface
 
                 return new OperationDto()
                 {
-                    Client = container.Owener.Name,
-                    Supplier = depot.Owener.Name,
+                    Client = ctx.Entities.First(x=>x.Id == container.OwenerId).Name,
+                    Supplier = ctx.Entities.First(x=>x.Id == depot.OwenerId).Name,
                     Date = operation.Date,
                     Container = container.Code,
                     Depot = depot.Name,
@@ -103,8 +103,8 @@ namespace Services.PublicInterface
 
                 return new OperationDto()
                 {
-                    Client = container.Owener.Name,
-                    Supplier = depot.Owener.Name,
+                    Client = ctx.Entities.First(x=>x.Id == container.OwenerId).Name,
+                    Supplier = ctx.Entities.First(x=>x.Id == depot.OwenerId).Name,
                     Date = operation.Date,
                     Container = container.Code,
                     Depot = depot.Name,
