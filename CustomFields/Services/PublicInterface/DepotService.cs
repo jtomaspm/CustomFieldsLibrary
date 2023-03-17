@@ -9,18 +9,9 @@ using System.Threading.Tasks;
 
 namespace Services.PublicInterface
 {
-    public static class ContainerInDepotService
+    public static class DepotService
     {
-        public static ContainerInDepotDto? getContainerInDepot(int containerId)
-        {
-            using (var ctx = new DatabaseContext())
-            {
-                var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
-                if (container == null) return null;
-                return ContainerInDepotBuilder.build(container);
-            }
-        }
-
+   
         public static IEnumerable<ContainerInDepotDto>? getDepotContainers(int depotId)
         {
             using (var ctx = new DatabaseContext())
@@ -69,6 +60,42 @@ namespace Services.PublicInterface
                     Date = DateTime.Now,
                     DepotId = depotId,
                     OperationType = "In",
+                };
+                ctx.Operations.Add(operation);
+                ctx.SaveChanges();
+                transaction.Commit();
+
+                return new OperationDto()
+                {
+                    Client = container.Owener.Name,
+                    Supplier = depot.Owener.Name,
+                    Date = operation.Date,
+                    Container = container.Code,
+                    Depot = depot.Name,
+                    Id = operation.Id,
+                    OperationType = operation.OperationType
+                };
+            }
+        }
+
+        public static OperationDto? DoOutOperation(int depotId, int containerId)
+        {
+            using (var ctx = new DatabaseContext())
+            using (var transaction = ctx.Database.BeginTransaction())
+            {
+                var depot = ctx.Depots.FirstOrDefault(x => x.Id == depotId);
+                if (depot == null) return null;
+                var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
+                if (container == null) return null;
+                var containerInDepot = ContainerInDepotBuilder.build(container);
+                if(containerInDepot == null || containerInDepot.Depot != depot.Name) return null;
+
+                var operation = new Operation()
+                {
+                    ContainerId = containerId,
+                    Date = DateTime.Now,
+                    DepotId = depotId,
+                    OperationType = "Out",
                 };
                 ctx.Operations.Add(operation);
                 ctx.SaveChanges();
