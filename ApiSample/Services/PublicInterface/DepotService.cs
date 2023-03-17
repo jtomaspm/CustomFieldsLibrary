@@ -53,6 +53,7 @@ namespace Services.PublicInterface
                 if (depot == null) return null;
                 var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
                 if (container == null) return null;
+                if (ContainerInDepotBuilder.build(container) != null) return null;
 
                 var operation = new Operation()
                 {
