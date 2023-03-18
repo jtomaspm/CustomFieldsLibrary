@@ -5,7 +5,7 @@ export type Container = {
     id : number,
     code : string,
     containerType : string,
-    owener : string,
+    owner : string,
     depot : string,
 }
 
@@ -15,6 +15,7 @@ export async function getContainers() {
     const res = await axios.get(getBackendApiEndpoint() + 'Container', getAxiosConfigs()).catch((error) => {
         console.log(error);
     });
+    console.log(res);
     return res?.data as Container[];
 }
 

@@ -16,7 +16,7 @@ namespace Services.Models.Dtos
 
         public string ContainerType { get; set; }
 
-        public string Owener { get; set; }
+        public string Owner { get; set; }
 
         public string Depot { get; set; }
     }
@@ -32,7 +32,7 @@ namespace Services.Models.Dtos
                 Code = container.Code,
                 ContainerType = ctx.ContainerTypes.First(x=>x.Id == container.ContainerTypeId).Name,
                 Depot = cid?.Depot ?? "",
-                Owener = ctx.Entities.First(x=>x.Id==container.OwenerId).Name,
+                Owner = ctx.Entities.First(x=>x.Id==container.OwenerId).Name,
             };
         }
     }

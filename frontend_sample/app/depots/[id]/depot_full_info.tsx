@@ -1,7 +1,7 @@
 import { Depot as DepotType, DepotFullInfo } from "@/services/depot_service";
 import Depot from "../depot";
 
-export default function DepotFullInfo({depot}: {depot:DepotFullInfo}) {
+export default function DepotFullInfo({ depot }: { depot: DepotFullInfo }) {
     const th_class = "text-1xl";
     return (
         <div>
@@ -13,22 +13,25 @@ export default function DepotFullInfo({depot}: {depot:DepotFullInfo}) {
             <h2 className="text-2xl my-5">Containers:</h2>
             <div className="overflow-x-auto">
                 <table className="table table-compact p-0">
-                    <tr >
-                        <th><h1 className={th_class}>Code</h1></th>
-                        <th><h1 className={th_class}>Type</h1></th>
-                        <th><h1 className={th_class}>Owner</h1></th>
-                        <th><h1 className={th_class}>Date In</h1></th>
-                        <th></th>
-                    </tr>
-                    {
-                        depot.containers.map((container) => {
+                    <thead>
+                        <tr >
+                            <th><h1 className={th_class}>Code</h1></th>
+                            <th><h1 className={th_class}>Type</h1></th>
+                            <th><h1 className={th_class}>Owner</h1></th>
+                            <th><h1 className={th_class}>Date In</h1></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            depot.containers.map((container) => {
                             const tr_class = "hover:bg-cyan-900"
                             const info_href = "/containers/" + container.id;
                             return (
                                 <tr className={tr_class} key={container.id} >
                                     <td>{container.code}</td>
                                     <td>{container.containerType}</td>
-                                    <td>{container.owener}</td>
+                                    <td>{container.owner}</td>
                                     <td>{container.inDate}</td>
                                     <td>
                                         <a href={info_href} className="rounded-full btn btn-outline btn-error btn-xs mx-1">Out</a>
@@ -36,8 +39,8 @@ export default function DepotFullInfo({depot}: {depot:DepotFullInfo}) {
                                     </td>
                                 </tr>
                             );
-                        })
-                    }
+                        })}
+                    </tbody>
                 </table>
             </div>
         </div>

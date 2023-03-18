@@ -16,7 +16,7 @@ namespace Services.Models.Dtos
 
         public string ContainerType { get; set; }
 
-        public string Owener { get; set; }
+        public string Owner { get; set; }
 
         public string Depot { get; set; }
 
@@ -38,7 +38,7 @@ namespace Services.Models.Dtos
                 ContainerType = ctx.ContainerTypes.First(x=>x.Id == container.ContainerTypeId).Name,
                 Depot = ctx.Depots.First(x=>x.Id == lastOperation.DepotId).Name,
                 InDate = ctx.Operations.Where(x => x.ContainerId == container.Id && x.OperationType == "In").Max(x => x.Date),
-                Owener = ctx.Entities.First(x=>x.Id == container.OwenerId).Name,
+                Owner = ctx.Entities.First(x=>x.Id == container.OwenerId).Name,
             };
         }
     }
