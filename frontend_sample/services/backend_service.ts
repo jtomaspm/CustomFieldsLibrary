@@ -5,7 +5,8 @@ export function getAxiosConfigs() {
             rejectUnauthorized : false
         });
     return {
-        httpsAgent: agent
+        httpsAgent: agent,
+        next : { revalidate : 2 } 
     };
 } 
 

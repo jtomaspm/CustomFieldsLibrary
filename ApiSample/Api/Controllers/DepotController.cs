@@ -12,5 +12,12 @@ namespace Api.Controllers
         {
             return DepotService.getDepots();
         }
+
+        [Route("/api/Depot/{id}")]
+        [HttpGet]
+        public DepotFullInfoDto? getDepotFullInfo(int id)
+        {
+            return DepotService.getDepotFullInfo(id);
+        }
     }
 }

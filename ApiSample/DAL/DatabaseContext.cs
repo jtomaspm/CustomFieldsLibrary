@@ -31,7 +31,7 @@ public partial class DatabaseContext : DbContext
     public virtual DbSet<OperationType> OperationTypes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=192.168.1.113;Database=CustomFieldsExample;TrustServerCertificate=True;User=sa;Password=Cr0ssr0ads1!");
+        => optionsBuilder.UseSqlServer("Server=192.168.1.113;Database=CustomFieldsExample;TrustServerCertificate=True;User=sa;Password=Cr0ssr0ads1!;MultipleActiveResultSets=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

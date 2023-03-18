@@ -19,14 +19,33 @@ namespace Services.PublicInterface
                 var depot = ctx.Depots.FirstOrDefault(x => x.Id == depotId);
                 if (depot == null) return null;
                 var containers = new List<ContainerInDepotDto>();
-                var operationsByContainer = depot.Operations.GroupBy(x => x.ContainerId);
+                var operationsByContainer = ctx.Operations.Where(x=>x.DepotId == depotId).GroupBy(x => x.ContainerId);
                 foreach (var operation in operationsByContainer)
                 {
-                    var containerInDepot = ContainerInDepotBuilder.build(operation.First().Container);
+                    var container = ctx.Containers.First(x=>x.Id == operation.First().ContainerId);
+                    var containerInDepot = ContainerInDepotBuilder.build(container, ctx);
                     if (containerInDepot != null && containerInDepot.Depot == depot.Name)
                         containers.Add(containerInDepot);
                 }
                 return containers;
+            }
+        }
+
+        public static DepotFullInfoDto? getDepotFullInfo(int depotId)
+        {
+            var containers = getDepotContainers(depotId);
+            if (containers == null) return null;
+            using (var ctx = new DatabaseContext())
+            {
+                var depot = ctx.Depots.First(x=>x.Id == depotId);
+                return new DepotFullInfoDto()
+                {
+                    Id = depot.Id,
+                    containers = containers,
+                    Location = depot.Location,
+                    Name = depot.Name,
+                    Owener = ctx.Entities.First(x=>x.Id == depot.OwenerId).Name
+                };
             }
         }
 
@@ -53,7 +72,7 @@ namespace Services.PublicInterface
                 if (depot == null) return null;
                 var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
                 if (container == null) return null;
-                if (ContainerInDepotBuilder.build(container) != null) return null;
+                if (ContainerInDepotBuilder.build(container, ctx) != null) return null;
 
                 var operation = new Operation()
                 {
@@ -88,7 +107,7 @@ namespace Services.PublicInterface
                 if (depot == null) return null;
                 var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
                 if (container == null) return null;
-                var containerInDepot = ContainerInDepotBuilder.build(container);
+                var containerInDepot = ContainerInDepotBuilder.build(container , ctx);
                 if(containerInDepot == null || containerInDepot.Depot != depot.Name) return null;
 
                 var operation = new Operation()

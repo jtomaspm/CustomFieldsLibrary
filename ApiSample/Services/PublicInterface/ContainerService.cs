@@ -16,7 +16,7 @@ namespace Services.PublicInterface
             {
                 var container = ctx.Containers.FirstOrDefault(x => x.Id == containerId);
                 if (container == null) return null;
-                return ContainerInDepotBuilder.build(container);
+                return ContainerInDepotBuilder.build(container, ctx);
             }
         }
 

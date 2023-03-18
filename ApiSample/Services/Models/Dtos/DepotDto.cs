@@ -14,6 +14,6 @@ namespace Services.Models.Dtos
 
         public string Location { get; set; } = null!;
 
-        public string Owener { get; set; }
+        public string Owener { get; set; } = null!;
     }
 }
