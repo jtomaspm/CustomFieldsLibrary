@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-head-element */
 
 export const dynamic = 'auto',
     dynamicParams = true,
@@ -9,7 +8,6 @@ export const dynamic = 'auto',
 
 
 
-import Link from "next/link";
 import './global.css'
 
 export default function RootLayout({
@@ -27,6 +25,7 @@ export default function RootLayout({
                     <div className="navbar bg-base-100  text-purple-300 flex justify-center">
                         <a href="/" className={normal_btn}>Dashboard</a>
                         <a href="/depots" className={normal_btn}>Depots</a>
+                        <a href="/containers" className={normal_btn}>Containers</a>
                     </div>
                     <div className="flex justify-center">
                         {children}

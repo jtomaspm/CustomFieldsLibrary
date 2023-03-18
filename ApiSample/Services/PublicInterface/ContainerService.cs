@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.PublicInterface
 {
-    internal class ContainerService
+    public class ContainerService
     { 
         public static ContainerInDepotDto? getContainerInDepot(int containerId)
         {
@@ -18,6 +18,13 @@ namespace Services.PublicInterface
                 if (container == null) return null;
                 return ContainerInDepotBuilder.build(container, ctx);
             }
+        }
+
+        public static IEnumerable<ContainerDto> getAllContainers()
+        {
+            using (var ctx = new DatabaseContext())
+                return ctx.Containers.ToList()
+                    .ConvertAll(x=>ContainerDtoBuilder.build(x, ctx));
         }
 
     }
