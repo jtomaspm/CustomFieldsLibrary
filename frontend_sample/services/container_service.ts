@@ -1,17 +1,8 @@
+import { Container } from "@/types/container";
+import { Operation } from "@/types/operation";
 import { getTableFormat } from "@/utils/date_formater";
 import axios from "axios";
 import { getAxiosConfigs, getBackendApiEndpoint } from "./backend_service";
-import { Operation } from "./depot_service";
-
-export type Container = {
-    id : number,
-    code : string,
-    containerType : string,
-    owner : string,
-    depot : string,
-}
-
-export type ContainerInDepot = Container & { inDate : string }
 
 export async function getContainers() {
     const res = await axios.get(getBackendApiEndpoint() + 'Container', getAxiosConfigs()).catch((error) => {

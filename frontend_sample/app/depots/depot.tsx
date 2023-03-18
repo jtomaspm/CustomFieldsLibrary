@@ -1,4 +1,4 @@
-import { Depot } from "@/services/depot_service";
+import { Depot } from "@/types/depot";
 import Link from "next/link";
 
 export default function Depot({ depot } : { depot : Depot } ){

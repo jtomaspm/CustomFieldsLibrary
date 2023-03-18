@@ -1,4 +1,4 @@
-import { ContainerInDepot, getContainers } from "@/services/container_service";
+import { getContainers } from "@/services/container_service";
 
 export default async function ContainersPage() {
   const th_class = "text-1xl";

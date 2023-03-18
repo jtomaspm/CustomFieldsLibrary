@@ -1,10 +1,14 @@
 using DAL;
+using Microsoft.AspNetCore.OData;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+//enable OData 
+builder.Services.AddControllers().AddOData(options => 
+    options.Select().OrderBy().Filter().Count().Expand().SkipToken().SetMaxTop(100));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
