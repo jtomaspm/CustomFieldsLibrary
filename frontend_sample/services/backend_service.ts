@@ -13,3 +13,5 @@ export function getAxiosConfigs() {
 export function getBackendApiEndpoint() {
     return 'https://localhost:7037/api/'
 }
+
+export const DEFAULT_PAGE_SIZE = 6;

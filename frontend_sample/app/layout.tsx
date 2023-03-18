@@ -4,18 +4,23 @@ export const dynamic = 'auto',
     revalidate = 0,
     fetchCache = 'auto',
     runtime = 'nodejs',
-    preferedRegion = 'auto'
+    preferedRegion = 'auto';
 
 
 
+import { Catamaran } from '@next/font/google'
 import './global.css'
+
+const main_font = Catamaran({
+    variable : "--main-font",
+})
 
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const normal_btn = "btn btn-outline btn-primary normal-case text-xl mx-1"
+    const normal_btn = "btn btn-outline btn-accent normal-case text-xl mx-1"
     const active_btn = "btn btn-outline btn-accent normal-case text-xl mx-1"
     return (
         <html data-theme="dark">

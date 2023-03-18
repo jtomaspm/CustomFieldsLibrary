@@ -1,8 +1,9 @@
-import { getContainers } from "@/services/container_service";
+import { getPaginatedResults } from "@/services/pagination_service";
+import { Container } from "@/types/container";
 
 export default async function ContainersPage() {
   const th_class = "text-1xl";
-  const containers = await getContainers();
+  const containers = await getPaginatedResults<Container>("Container", 1);
   return (
     <div>
       <h1 className="text-center text-4xl text-blue-500 m-5">Containers</h1>
@@ -22,7 +23,8 @@ export default async function ContainersPage() {
               <th>
                 <h1 className={th_class}>In Depot</h1>
               </th>
-              <th></th>
+              <th>
+              </th>
             </tr>
           </thead>
           <tbody>
