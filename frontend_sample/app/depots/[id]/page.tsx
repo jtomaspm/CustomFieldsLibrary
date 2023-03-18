@@ -7,7 +7,7 @@ export default async function DepotPage({params} : any) {
     return (
         <div>
             <h1 className="text-center text-4xl text-blue-500 m-5">Depot</h1>
-            <DepotFullInfo key={depot.id} depot={depot} />
+            <DepotFullInfo key={depot?.id} depot={depot} />
         </div>
     );
 }

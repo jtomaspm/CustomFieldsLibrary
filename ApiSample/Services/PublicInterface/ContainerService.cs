@@ -27,5 +27,15 @@ namespace Services.PublicInterface
                     .ConvertAll(x=>ContainerDtoBuilder.build(x, ctx));
         }
 
+        public static ContainerFullDetailsDto? GetContainerFullDetails(int containerId)
+        {
+            using(var ctx = new DatabaseContext())
+            {
+                var container = ctx.Containers.FirstOrDefault(x=>x.Id == containerId);
+                if(container == null) return null;
+                return ContainerFullDetailsDtoBuilder.build(container, ctx);
+            }
+        }
+
     }
 }

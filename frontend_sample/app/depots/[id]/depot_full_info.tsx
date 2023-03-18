@@ -1,5 +1,5 @@
 import { Depot as DepotType, DepotFullInfo } from "@/services/depot_service";
-import Depot from "../depot";
+import { getTableFormat } from "@/utils/date_formater";
 
 export default function DepotFullInfo({ depot }: { depot: DepotFullInfo }) {
     const th_class = "text-1xl";

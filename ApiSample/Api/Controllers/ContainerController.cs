@@ -12,5 +12,12 @@ namespace Api.Controllers
         {
             return ContainerService.getAllContainers();
         }
+
+        [Route("/api/Container/{id}")]
+        [HttpGet]
+        public ContainerFullDetailsDto? getDepotFullInfo(int id)
+        {
+            return ContainerService.GetContainerFullDetails(id);
+        }
     }
 }
