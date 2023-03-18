@@ -1,30 +1,8 @@
+import { ContainerInDepot } from "@/types/container";
+import { Depot, DepotFullInfo } from "@/types/depot";
 import { getTableFormat } from "@/utils/date_formater";
 import axios from "axios";
 import { getAxiosConfigs, getBackendApiEndpoint } from "./backend_service";
-import { ContainerInDepot } from "./container_service";
-
-export type Depot = {
-    id: number,
-    name: string,
-    location: string,
-    owener: string
-}
-
-export type Operation = {
-    id: number,
-    container: string,
-    operationType: string,
-    depot: string,
-    date: string,
-    client: string,
-    supplier: string
-}
-
-export type DepotExtraInfo = {
-    containers: ContainerInDepot[]
-}
-
-export type DepotFullInfo = Depot & DepotExtraInfo;
 
 export async function getDepots() {
     const res = await axios.get(getBackendApiEndpoint() + 'Depot', getAxiosConfigs()).catch((error) => {
